@@ -1,5 +1,11 @@
 #! /bin/bash
 
+# TODO: Check with wine compiler/wine
+# TODO: Check with mingw/wine
+# TODO: Dig into the formatter with gcc
+# TODO: Compare Headers/STDLIB code for different palltforms
+
+
 COMPO="`date '+%Y.%m.%d:%H:%m'`-gcc.out"
 STD="c90 c89 iso9899:1990 iso9899:199409 c99 c9x iso9899:1999 iso9899:199x c1x gnu90 gnu89 gnu99 gnu++98 c++0x C++0x gnu++0x"
 
