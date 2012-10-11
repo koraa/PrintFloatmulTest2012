@@ -22,8 +22,7 @@ for _comp_ in $COMPILER; do
                 echo "$CMD"                         |  tee -a "$COMPO"
                 echo ""                             |  tee -a "$COMPO"
 
-                eval $CMD 2>&1 | tee -a "$COMPO" > /dev/null
-                mtet
+                eval $CMD 2>&1 | tee -a "$COMPO" > /dev/null && mtet
             done
         done
     done
