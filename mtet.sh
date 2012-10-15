@@ -13,8 +13,6 @@
 # If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 #
 
-# TODO: Check with wine compiler/wine
-# TODO: Check with mingw/wine
 # TODO: Dig into the formatter with gcc
 # TODO: Compare Headers/STDLIB code for different palltforms
 
@@ -41,8 +39,17 @@ for _comp_ in $COMPILER; do
                 echo "$CMD"                         |  tee -a "$COMPO"
                 echo ""                             |  tee -a "$COMPO"
 
-                eval $CMD 2>&1 | tee -a "$COMPO" > /dev/null && mtet
+                eval $CMD 2>&1 | tee -a "$COMPO" > /dev/null && ./mtet
             done
         done
     done
 done
+
+CMD="i586-mingw32msvc-gcc -x$_lang_ -O$_o_ *.c -o mtet.exe"
+
+echo ""                             |  tee -a "$COMPO"
+echo "############################" |  tee -a "$COMPO"
+echo "$CMD"                         |  tee -a "$COMPO"
+echo ""                             |  tee -a "$COMPO"
+
+eval $CMD 2>&1 | tee -a "$COMPO" > /dev/null && wine mtet.exe
