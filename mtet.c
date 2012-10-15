@@ -10,14 +10,15 @@
 #define aL 100000
 #define bL 333333
 
-#define decl(type, ex)                           \
-    type a ## ex = aL,                           \
-         b ## ex = bL,                           \
+#define decl(type, ex)                                      \
+    type a ## ex = aL,                                      \
+         b ## ex = bL,                                      \
          res ## ex  = (( type )  a ## ex   *   b ## ex ) ,  \
          rlit ## ex = (( type )  ((long) aL) * bL)
 
-#define out(from, ex, intr)                \
+#define out(from, ex, cast, intr)          \
     printf( #from " -> "                   \
+            #cast " -> "                   \
            /* FORMAT STRING */             \
            "%" #intr ": "                  \
            "[" #intr ", " #intr "]"        \
@@ -25,23 +26,32 @@
            " = " #intr                     \
            " = " #intr "\n"                \
            /* EO STRING */                 \
-           , a ## ex                       \
-           , b ## ex                       \
-           , res ## ex                     \
-           , rlit ## ex                    \
-           , a ## ex * b ## ex)
+           , (( cast ) a ## ex )           \
+           , (( cast ) b ## ex )           \
+           , (( cast ) res ## ex )         \
+           , (( cast ) rlit ## ex )        \
+           , (( cast ) a ## ex * b ## ex) )
 
-#define test(ex, type, intr) \
-    decl(type, ex);          \
-    out(type, ex, intr)
+#define test(ex, type, cast, intr) \
+    decl(type, ex);                \
+    out(type, ex, cast, intr)
 
 int main() {
-    test(_F,    float,  %f);
-    test(_F_L,  float,  %lf);
-    test(_D_F,  double, %f);
-    test(_D,    double, %lf);
-    test(_LD_F, long double, %f);
-    test(_LD_D, long double, %lf);
+    // NO CAST
+    test(_F,    float,  float, %f);
+    test(_F_L,  float,  float, %lf);
+    test(_D_F,  double, double, %f);
+    test(_D,    double, double, %lf);
+
+    // LONG DOUBLE
+    test(_LD_F, long double, long double, %f);
+    test(_LD_D, long double, long double, %lf);
+
+    // CAST
+    test(_CS_F,    float,  double, %f);
+    test(_CS_F_L,  float,  double, %lf);
+    test(_CS_D_F,  double, float,  %f);
+    test(_CS_D,    double, float,  %lf);
 
     return 0;
 }
